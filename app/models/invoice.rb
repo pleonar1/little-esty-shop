@@ -15,5 +15,4 @@ class Invoice < ApplicationRecord
   def self.not_completed
     where(:invoices => {status: 1}).order(created_at: :asc)
   end
-
 end

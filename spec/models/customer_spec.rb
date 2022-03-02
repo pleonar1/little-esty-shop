@@ -27,7 +27,7 @@ RSpec.describe Customer, type: :model do
     @customer_4 = Customer.create!(first_name: "Person 4", last_name: "Mcperson 4")
     @customer_5 = Customer.create!(first_name: "Person 5", last_name: "Mcperson 5")
     @customer_6 = Customer.create!(first_name: "Person 6", last_name: "Mcperson 6")
-    # status assigned evenly spread around, not sure if we should adjust for different amounts of each
+
     @invoice_1 = @customer_1.invoices.create!(status: "completed")
     @invoice_2 = @customer_1.invoices.create!(status: "cancelled")
     @invoice_3 = @customer_2.invoices.create!(status: "in progress")
@@ -40,7 +40,7 @@ RSpec.describe Customer, type: :model do
     @invoice_10 = @customer_4.invoices.create!(status: "completed")
     @invoice_11 = @customer_5.invoices.create!(status: "cancelled")
     @invoice_12 = @customer_6.invoices.create!(status: "in progress")
-    #for now unit prices match between items and invoice_items, may want to adjust as testing requires
+
     @invoice_item_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 1, unit_price: 13, status: "shipped")
     @invoice_item_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_2.id, quantity: 2, unit_price: 29, status: "packaged")
     @invoice_item_3 = InvoiceItem.create!(invoice_id: @invoice_3.id, item_id: @item_3.id, quantity: 3, unit_price: 84, status: "pending")
@@ -53,7 +53,7 @@ RSpec.describe Customer, type: :model do
     @invoice_item_10 = InvoiceItem.create!(invoice_id: @invoice_10.id, item_id: @item_2.id, quantity: 4, unit_price: 29, status: "shipped")
     @invoice_item_11 = InvoiceItem.create!(invoice_id: @invoice_11.id, item_id: @item_3.id, quantity: 5, unit_price: 84, status: "packaged")
     @invoice_item_12 = InvoiceItem.create!(invoice_id: @invoice_12.id, item_id: @item_4.id, quantity: 6, unit_price: 25, status: "pending")
-    # result assigned evenly spread around, not sure if we should adjust for different amounts of each
+
     @transcation_1 = @invoice_1.transactions.create!(credit_card_number: "4654405418249632", result: "success")
     @transcation_2 = @invoice_2.transactions.create!(credit_card_number: "4654405418249634", result: "failed")
     @transcation_3 = @invoice_3.transactions.create!(credit_card_number: "4654405418249635", result: "success")

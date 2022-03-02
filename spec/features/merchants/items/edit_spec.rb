@@ -1,21 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Merchant Items Edit Page" do
-
-  # describe 'github api' do
-  #   it "has the repo name" do
-  #     merchant = Merchant.create!(name: "Paul the Merchant")
-  #     item1 = merchant.items.create!(name: "Paul's Item",
-  #                                    description: "Paul's very popular item",
-  #                                    unit_price: "2500")
-  #     visit "/merchants/#{merchant.id}/items/#{item1.id}/edit"
-  #
-  #     within ".github-info" do
-  #       expect(page).to have_content("SullyBirashk/little-esty-shop")
-  #     end
-  #   end
-  # end
-
   describe "when I visit the merchant items edit page" do
     it "I see form filled in with existing info" do
       merchant = Merchant.create!(name: "Paul the Merchant")
@@ -43,7 +28,7 @@ RSpec.describe "Merchant Items Edit Page" do
       expect(current_path).to eq("/merchants/#{merchant.id}/items/#{item1.id}")
       item1.reload
       expect(item1.unit_price).to eq(10)
-      #flash message test
+      expect(page).to have_content("Item Successfully Updated")
     end
   end
 end

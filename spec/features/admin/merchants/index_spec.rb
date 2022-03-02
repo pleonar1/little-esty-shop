@@ -1,17 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'the admin merchant index' do
-
-  # describe 'github api' do
-  #   it "has the repo name" do
-  #     visit "/admin/merchants"
-  #
-  #     within ".github-info" do
-  #       expect(page).to have_content("SullyBirashk/little-esty-shop")
-  #     end
-  #   end
-  # end
-
   it 'list the merchants' do
     merchant_1 = Merchant.create!(name: "Staples")
     merchant_2 = Merchant.create!(name: "Home Depot")
@@ -276,21 +265,18 @@ RSpec.describe 'the admin merchant index' do
     end
   end
 
-    it "has links to admin/merchants show page as merchant names" do
-      enabled_merchant = Merchant.create!(name: "Staples", status: "enabled")
-      disabled_merchant = Merchant.create!(name: "Home Depot", status: "disabled")
+  it "has links to admin/merchants show page as merchant names" do
+    enabled_merchant = Merchant.create!(name: "Staples", status: "enabled")
+    disabled_merchant = Merchant.create!(name: "Home Depot", status: "disabled")
 
-      visit '/admin/merchants'
+    visit '/admin/merchants'
 
-      within ".disabled_merchants" do
-        expect(page).to have_link(disabled_merchant.name)
+    within ".disabled_merchants" do
+      expect(page).to have_link(disabled_merchant.name)
 
-        click_on("#{disabled_merchant.name}")
-      end
-
-      expect(current_path).to eq("/admin/merchants/#{disabled_merchant.id}")
-
+      click_on("#{disabled_merchant.name}")
     end
 
-
+    expect(current_path).to eq("/admin/merchants/#{disabled_merchant.id}")
+  end
 end
