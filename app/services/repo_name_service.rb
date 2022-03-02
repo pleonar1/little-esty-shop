@@ -1,4 +1,5 @@
 class RepoNameService
+  
   def self.name
     url = "https://api.github.com/repos/sullybirashk/little-esty-shop"
     Faraday.new(url)
