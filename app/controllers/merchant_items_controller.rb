@@ -21,7 +21,6 @@ class MerchantItemsController < ApplicationController
       item.update(item_params)
       redirect_to "/merchants/#{merchant.id}/items/#{item.id}", notice: "Item Successfully Updated"
     else params[:_method] == 'put'
-      # binding.pry
       item.update(status: (params[:status].to_i))
       redirect_to "/merchants/#{merchant.id}/items"
     end
