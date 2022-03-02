@@ -1,9 +1,5 @@
+# [Little Esty Shop](https://peaceful-beach-74579.herokuapp.com/)
 <div id="top"></div>
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -14,8 +10,6 @@ This repo was written as part of the Turing School of Software Design's group pr
 * Utilize advanced routing techniques including namespacing to organize and group like functionality together.
 * Utilize advanced active record techniques to perform complex database queries.
 * Practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code.
-
-To visit this page click here.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
