@@ -54,6 +54,5 @@ class Merchant < ApplicationRecord
              .group("invoices.created_at")
              .order(totalrevenue: :desc)
              .first.created_at
-
    end
 end
