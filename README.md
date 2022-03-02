@@ -40,7 +40,7 @@ This project requires Ruby 2.7.4.
 <!-- USAGE EXAMPLES -->
 ## Database Schema
 
-Insert DB schema picture here
+![image](https://user-images.githubusercontent.com/92219945/156466250-be6d1785-4bba-4b0b-9e88-674e1b401c95.png)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -49,7 +49,9 @@ Insert DB schema picture here
 <!-- ROADMAP -->
 ## Self Evaluation
 
-Insert self evaluation here
+Our team was extremely pleased with not only our progress but our process. We had instant chemistry and complementary skills that made giving and receiving feedback fun and informative. By balancing our intellectual curiosity with tracking our progress using GitHub projects, we were able to not only complete all project requirements well before the deadline but refactor each other's work and learn new approaches to similar problems. Ultimately this process of giving and receiving feedback refined our product and strengthened our coding skills as individuals. 
+
+If this sort of collaboration would benefit your team, please scroll down to get in contact with us and schedule an interview!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
