@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
 
   resources :merchants do
+    resources :bulk_discounts, controller: 'merchant_bulk_discounts'
     resources :items, except:[:destroy], controller: 'merchant_items'
     resources :invoices, only:[:index, :show, :update], controller: 'merchant_invoices'
   end
