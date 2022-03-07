@@ -1,5 +1,5 @@
 <h1><% @merchant.name %> Bulk Discounts</h1>
-
+<p><%= link_to "Create New Bulk Discount", "/merchants/#{@merchant.id}/bulk_discounts/new" %></p>
 <div class="bulk_discounts">
   <% @merchant.bulk_discounts.each do |discount| %>
     <div class=<%= "bulk_discount_#{discount.id}" %>>

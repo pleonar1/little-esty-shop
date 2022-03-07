@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Merchant Bulk Discount Inddex' do
+RSpec.describe 'Merchant Bulk Discount Index' do
   describe "when I visit the Merchant bulk discount index as a merchant," do
     it "I see all of my bulk discounts inclusing their attributes" do
       merchant_1 = Merchant.create!(name: "Staples")
@@ -34,5 +34,16 @@ RSpec.describe 'Merchant Bulk Discount Inddex' do
         expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/#{bulk_d1.id}")
       end
     end
+
+    it "has a link to create a new bulk discount" do
+      merchant_1 = Merchant.create!(name: "Staples")
+
+      visit "/merchants/#{merchant_1.id}/bulk_discounts"
+
+      click_link("Create New Bulk Discount")
+
+      expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/new")
+    end
+
   end
 end
