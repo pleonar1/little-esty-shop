@@ -102,6 +102,14 @@ RSpec.describe 'the merchant dashboard' do
         expect("Order number: #{@invoice_3.id}").to appear_before("Order number: #{@invoice_5.id}")
       end
     end
+
+    it "has a link to the merchant bulk discounts index" do
+      visit "/merchants/#{@merchant_1.id}/dashboard"
+
+      click_link "Bulk Discounts"
+
+      expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts")
+    end
   end
 
   describe 'top customers section' do
