@@ -5,7 +5,7 @@
     <div class=<%= "bulk_discount_#{discount.id}" %>>
       <p><%= "Percent off: #{number_to_percentage(discount.discount, precision: 0)}" %></p>
       <p><%= "Quanity Needed: #{discount.quantity}" %></p>
-  
+      <p> <%= link_to "Bulk Discount #{discount.id}", "/merchants/#{@merchant.id}/bulk_discounts/#{discount.id}" %></p>
     </div>
   <% end %>
 </div>

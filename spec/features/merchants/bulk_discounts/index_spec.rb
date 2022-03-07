@@ -23,10 +23,16 @@ RSpec.describe 'Merchant Bulk Discount Inddex' do
       expect(page).to_not have_content(bulk_d3.quantity)
     end
 
-
-
     it "each bulk discount listed has a link to its show page" do
+      merchant_1 = Merchant.create!(name: "Staples")
+      bulk_d1 = merchant_1.bulk_discounts.create!(quantity: 5, discount: 10)
 
+      visit "/merchants/#{merchant_1.id}/bulk_discounts"
+
+      within "div.bulk_discount_#{bulk_d1.id}" do
+        click_link "Bulk Discount #{bulk_d1.id}"
+        expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/#{bulk_d1.id}")
+      end
     end
   end
 end
