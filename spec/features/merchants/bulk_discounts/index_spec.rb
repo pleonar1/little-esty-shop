@@ -45,5 +45,27 @@ RSpec.describe 'Merchant Bulk Discount Index' do
       expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/new")
     end
 
+    it "next to each bulk discount is a link to delete it.  If clicked it redirects to index with the bd no longer there" do
+      merchant_1 = Merchant.create!(name: "Staples")
+      bulk_d1 = merchant_1.bulk_discounts.create!(quantity: 5, discount: 11)
+      bulk_d2 = merchant_1.bulk_discounts.create!(quantity: 10, discount: 10)
+
+      visit "/merchants/#{merchant_1.id}/bulk_discounts"
+
+      expect(page).to have_content(bulk_d1.quantity)
+      expect(page).to have_content(bulk_d1.discount)
+
+      within "div.bulk_discount_#{bulk_d1.id}" do
+        expect(page).to have_link("Delete")
+      end
+
+      within "div.bulk_discount_#{bulk_d2.id}" do
+        click_link "Delete"
+        expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts")
+      end
+
+      expect(page).to_not have_content(bulk_d1.quantity)
+      expect(page).to_not have_content(bulk_d1.discount)
+    end
   end
 end
