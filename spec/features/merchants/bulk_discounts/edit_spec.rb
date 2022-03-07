@@ -19,5 +19,4 @@ RSpec.describe 'Merchant Bulk Discounts Edit page' do
     expect(page).to_not have_content("Percent Off: 10%")
     expect(page).to_not have_content("Quantity Needed: 5")
   end
-
 end
