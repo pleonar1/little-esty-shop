@@ -28,6 +28,10 @@ class MerchantBulkDiscountsController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
     private
 
       def bulk_discount_params
