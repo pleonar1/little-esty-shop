@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Merchant Bulk Discount Inddex' do
+RSpec.describe 'Merchant Bulk Discount Index' do
   describe "when I visit the Merchant bulk discount index as a merchant," do
     it "I see all of my bulk discounts inclusing their attributes" do
       merchant_1 = Merchant.create!(name: "Staples")
