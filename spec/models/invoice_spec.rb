@@ -147,6 +147,7 @@ RSpec.describe Invoice, type: :model do
 
       expect(invoice1.total_discount_for_merchant(merchant_1.id)).to eq(0) #no discount applied
       expect(invoice2.total_discount_for_merchant(merchant_1.id)).to eq(2000) #the better discount 20 percent is applied
+      #unsure if I should format it .to_f and divide by 100 here or later
     end
   end
 end
