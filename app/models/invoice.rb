@@ -16,11 +16,15 @@ class Invoice < ApplicationRecord
     where(:invoices => {status: 1}).order(created_at: :asc)
   end
 
-  def total_revenue_for_merchant(merchant)
+  def total_revenue_for_merchant(merchant_id)
     invoice_items.select("invoice_items.id, (invoice_items.unit_price * invoice_items.quantity) AS revenue")
                  .group("invoice_items.id")
                  .joins(:item)
-                 .where("items.merchant_id = ?", merchant)
+                 .where("items.merchant_id = ?", merchant_id)
                  .sum(&:revenue)
+  end
+
+  def total_discount_for_merchant(merchant_id)
+
   end
 end
