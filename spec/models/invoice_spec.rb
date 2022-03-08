@@ -88,4 +88,22 @@ RSpec.describe Invoice, type: :model do
       expect(Invoice.not_completed).to eq([invoice_1, invoice_2])
     end
   end
+
+  describe "Final project instance methods" do
+    it "calculates the total_revenue_for_merchant" do
+      merchant_1 = Merchant.create!(name: "Staples")
+      merchant_2 = Merchant.create!(name: "Office Depot")
+      merchant_3 = Merchant.create!(name: "Office Depot")
+
+      item1 = merchant_1.items.create!(name: "item1", description: "item1 description", unit_price: 10)
+      item2 = merchant_1.items.create!(name: "item2", description: "item2 description", unit_price: 20)
+      item3 = merchant_2.items.create!(name: "item3", description: "item3 description", unit_price: 30)
+      item4 = merchant_3.items.create!(name: "item4", description: "item4 description", unit_price: 40)
+
+      bd1 = merchant_1.bulk_discounts.create!(discount: 10, quantity: 10)
+      bd2 = merchant_1.bulk_discounts.create!(discount: 20, quantity: 10)
+      bd3 = merchant_2.bulk_discounts.create!(discount: 30, quantity: 10)
+      bd4 = merchant_3.bulk_discounts.create!(discount: 40, quantity: 10)
+    end
+  end
 end
