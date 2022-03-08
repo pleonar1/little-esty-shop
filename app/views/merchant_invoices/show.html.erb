@@ -20,3 +20,5 @@
   <% end %>
 <% end %>
 <h2> <%= "Total Revenue: #{@invoice.total_invoice_revenue}" %> </h2>
+<h2> <%= "Total Revenue Before Discounts: #{@invoice.total_revenue_for_merchant(@merchant.id)}" %></h2>
+<h2> <%= "Total Revenue After Discounts: #{@invoice.revenue_after_discount(@merchant.id)}" %></h2>

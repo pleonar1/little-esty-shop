@@ -88,4 +88,89 @@ RSpec.describe Invoice, type: :model do
       expect(Invoice.not_completed).to eq([invoice_1, invoice_2])
     end
   end
+
+  describe "Final project instance methods" do
+    it "calculates the total_revenue_for_merchant" do
+      merchant_1 = Merchant.create!(name: "Staples")
+      merchant_2 = Merchant.create!(name: "Office Depot")
+      merchant_3 = Merchant.create!(name: "Office Depot2")
+
+      item1 = merchant_1.items.create!(name: "item1", description: "item1 description", unit_price: 10)
+      item2 = merchant_1.items.create!(name: "item2", description: "item2 description", unit_price: 20)
+      item3 = merchant_2.items.create!(name: "item3", description: "item3 description", unit_price: 30)
+      item4 = merchant_3.items.create!(name: "item4", description: "item4 description", unit_price: 40)
+
+      bd1 = merchant_1.bulk_discounts.create!(discount: 10, quantity: 10)
+      bd2 = merchant_1.bulk_discounts.create!(discount: 20, quantity: 10)
+      bd3 = merchant_2.bulk_discounts.create!(discount: 30, quantity: 10)
+      bd4 = merchant_3.bulk_discounts.create!(discount: 40, quantity: 10)
+
+      customer = Customer.create!(first_name: "Paul", last_name: "Wall")
+
+      invoice1 = customer.invoices.create!(status: "completed")
+      invoice2 = customer.invoices.create!(status: "completed")
+      invoice3 = customer.invoices.create!(status: "completed")
+
+      invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 5, unit_price: 10, status: "shipped")
+      invoice_item2 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item3.id, quantity: 5, unit_price: 11, status: "shipped")
+
+      invoice_item3 = InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 10, unit_price: 10, status: "shipped")
+
+
+
+      expect(invoice1.total_revenue_for_merchant(merchant_1.id)).to eq(50)
+      #^ this to show that it can calculate the total revenue for a specific merchant
+      #there are two merchants on the invoice and no bulk discounts should be applied
+      #should only return 50 instead of 105 because thats how much revenue merchant1 had
+
+      expect(invoice2.total_revenue_for_merchant(merchant_1.id)).to eq(100)
+    end
+
+    it "calculates the total_discount_for_merchant" do
+      merchant_1 = Merchant.create!(name: "Staples")
+      merchant_2 = Merchant.create!(name: "Office Depot")
+
+      item1 = merchant_1.items.create!(name: "item1", description: "item1 description", unit_price: 10)
+      item3 = merchant_2.items.create!(name: "item3", description: "item3 description", unit_price: 30)
+
+      bd1 = merchant_1.bulk_discounts.create!(discount: 10, quantity: 9)
+      bd2 = merchant_1.bulk_discounts.create!(discount: 20, quantity: 10)
+
+      customer = Customer.create!(first_name: "Paul", last_name: "Wall")
+
+      invoice1 = customer.invoices.create!(status: "completed")
+      invoice2 = customer.invoices.create!(status: "completed")
+
+
+      invoice_item3 = InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 10, unit_price: 10, status: "shipped")
+      invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 5, unit_price: 10, status: "shipped")
+
+      expect(invoice1.total_discount_for_merchant(merchant_1.id)).to eq(0) #no discount applied
+      expect(invoice2.total_discount_for_merchant(merchant_1.id)).to eq(2000) #the better discount 20 percent is applied
+      #unsure if I should format it .to_f and divide by 100 here or later
+    end
+
+    it "calculates the revenue after discount is applied" do
+      merchant_1 = Merchant.create!(name: "Staples")
+      merchant_2 = Merchant.create!(name: "Office Depot")
+
+      item1 = merchant_1.items.create!(name: "item1", description: "item1 description", unit_price: 10)
+      item3 = merchant_2.items.create!(name: "item3", description: "item3 description", unit_price: 30)
+
+      bd1 = merchant_1.bulk_discounts.create!(discount: 10, quantity: 9)
+      bd2 = merchant_1.bulk_discounts.create!(discount: 20, quantity: 10)
+
+      customer = Customer.create!(first_name: "Paul", last_name: "Wall")
+
+      invoice1 = customer.invoices.create!(status: "completed")
+      invoice2 = customer.invoices.create!(status: "completed")
+
+
+      invoice_item3 = InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 10, unit_price: 10, status: "shipped")
+      invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 5, unit_price: 10, status: "shipped")
+
+      expect(invoice1.revenue_after_discount(merchant_1.id)).to eq(50.0)
+      expect(invoice2.revenue_after_discount(merchant_1.id)).to eq(80)
+    end
+  end
 end
