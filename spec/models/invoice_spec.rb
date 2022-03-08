@@ -146,7 +146,7 @@ RSpec.describe Invoice, type: :model do
       invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 5, unit_price: 10, status: "shipped")
 
       expect(invoice1.total_discount_for_merchant(merchant_1.id)).to eq(0) #no discount applied
-      expect(invoice3.total_discount_for_merchant(merchant_1.id)).to eq(20) #the better discount 20 percent is applied
+      expect(invoice2.total_discount_for_merchant(merchant_1.id)).to eq(2000) #the better discount 20 percent is applied
     end
   end
 end
