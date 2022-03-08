@@ -32,4 +32,8 @@ class Invoice < ApplicationRecord
     .group("invoice_items.id")
     .sum(&:discounted_revenue)
   end
+
+  def revenue_after_discount(merchant_id)
+    ((total_revenue_for_merchant(merchant_id) - (total_discount_for_merchant(merchant_id)).to_f/100))
+  end
 end
