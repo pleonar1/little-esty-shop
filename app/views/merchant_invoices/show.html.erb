@@ -18,6 +18,12 @@
     <%= form.label :status_shipped, "shipped" %>
     <%= form.submit "Update Item Status" %>
   <% end %>
+
+  <% if invoice_item.best_bulk_discount.nil? %>
+    <p><%= "No Bulk Discounts Availible" %></p>
+  <% else %>
+    <p>Link To Availible Discount: <%= link_to "#{invoice_item.best_bulk_discount.id}", "/merchants/#{@merchant.id}/bulk_discounts/#{invoice_item.best_bulk_discount.id}" %></p>
+  <% end %>
 <% end %>
 <h2> <%= "Total Revenue: #{@invoice.total_invoice_revenue}" %> </h2>
 <h2> <%= "Total Revenue Before Discounts: #{@invoice.total_revenue_for_merchant(@merchant.id)}" %></h2>

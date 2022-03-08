@@ -146,7 +146,7 @@ RSpec.describe "Merchant Invoices Show Page" do
       bulk_discount1 = merchant_1.bulk_discounts.create!(discount: 20, quantity: 10)
       bulk_discount2 = merchant_1.bulk_discounts.create!(discount: 30, quantity: 100)
 
-      "/merchants/#{merchant_1.id}/invoices/#{invoice_1.id}"
+      visit "/merchants/#{merchant_1.id}/invoices/#{invoice_1.id}"
 
       click_link("#{bulk_discount2.id}")
 
