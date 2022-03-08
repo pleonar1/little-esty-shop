@@ -129,5 +129,33 @@ RSpec.describe "Merchant Invoices Show Page" do
       expect(page).to have_content("Total Revenue Before Discounts: 10000")
       expect(page).to have_content("Total Revenue After Discounts: 7000")
     end
+
+    it "has a link to the show page for the best bulk discount availible, if there is one" do
+      merchant_1 = Merchant.create!(name: "Staples")
+
+      item_1 = merchant_1.items.create!(name: "stapler", description: "Staples papers together", unit_price: 13)
+
+      customer_1 = Customer.create!(first_name: "Person 1", last_name: "Mcperson 1")
+
+      invoice_1 = customer_1.invoices.create!(status: "completed")
+      invoice_2 = customer_1.invoices.create!(status: "completed")
+
+      invoice_item_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 100, unit_price: 100, status: "shipped")
+      invoice_item_2 = InvoiceItem.create!(invoice_id: invoice_2.id, item_id: item_1.id, quantity: 1, unit_price: 100, status: "shipped")
+
+      bulk_discount1 = merchant_1.bulk_discounts.create!(discount: 20, quantity: 10)
+      bulk_discount2 = merchant_1.bulk_discounts.create!(discount: 30, quantity: 100)
+
+      "/merchants/#{merchant_1.id}/invoices/#{invoice_1.id}"
+
+      click_link("#{bulk_discount2.id}")
+
+      expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/#{bulk_discount2.id}")
+
+      visit "/merchants/#{merchant_1.id}/invoices/#{invoice_2.id}"
+
+      expect(page).to_not have_link("#{bulk_discount1.id}")
+      expect(page).to_not have_link("#{bulk_discount2.id}")
+    end
   end
 end
