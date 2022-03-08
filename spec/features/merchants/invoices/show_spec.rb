@@ -156,6 +156,7 @@ RSpec.describe "Merchant Invoices Show Page" do
 
       expect(page).to_not have_link("#{bulk_discount1.id}")
       expect(page).to_not have_link("#{bulk_discount2.id}")
+      expect(page).to have_content("No Bulk Discounts Availible")
     end
   end
 end
