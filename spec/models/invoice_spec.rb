@@ -104,6 +104,20 @@ RSpec.describe Invoice, type: :model do
       bd2 = merchant_1.bulk_discounts.create!(discount: 20, quantity: 10)
       bd3 = merchant_2.bulk_discounts.create!(discount: 30, quantity: 10)
       bd4 = merchant_3.bulk_discounts.create!(discount: 40, quantity: 10)
+
+      customer = Customer.create!(first_name: "Paul", last_name: "Wall")
+
+      invoice1 = customer.invoices.create!(status: "completed")
+      invoice2 = customer.invoices.create!(status: "completed")
+      invoice3 = customer.invoices.create!(status: "completed")
+
+      invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 5, unit_price: 10, status: "shipped")
+      invoice_item2 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item3.id, quantity: 5, unit_price: 11, status: "shipped")
+
+      expect(invoice1.total_revenue_for_merchant(merchant_1)).to eq(50)
+      #^ this to show that it can calculate the total revenue for a specific merchant
+      #there are two merchants on the invoice and no bulk discounts should be applied
+      #should only return 50 instead of 105 because thats how much revenue merchant1 had
     end
   end
 end
