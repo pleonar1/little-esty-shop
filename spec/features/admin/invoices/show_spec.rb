@@ -70,4 +70,10 @@ RSpec.describe 'the admin invoice show' do
     expect(page).to have_content("Invoice Status: cancelled")
     expect(page).to_not have_content("Invoice Status: in progress")
   end
+
+  describe "final project" do
+    it "has the total revenue after discounts are applied" do
+
+    end
+  end
 end
