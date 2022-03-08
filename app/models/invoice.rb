@@ -15,4 +15,12 @@ class Invoice < ApplicationRecord
   def self.not_completed
     where(:invoices => {status: 1}).order(created_at: :asc)
   end
+
+  def total_revenue_for_merchant(merchant)
+    invoice_items.select("invoice_items.id, (invoice_items.unit_price * invoice_items.quantity) AS revenue")
+                 .group("invoice_items.id")
+                 .joins(:item)
+                 .where("items.merchant_id = ?", merchant)
+                 .sum(&:revenue)
+  end
 end

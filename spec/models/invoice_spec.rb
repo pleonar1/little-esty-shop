@@ -114,7 +114,7 @@ RSpec.describe Invoice, type: :model do
       invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 5, unit_price: 10, status: "shipped")
       invoice_item2 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item3.id, quantity: 5, unit_price: 11, status: "shipped")
 
-      expect(invoice1.total_revenue_for_merchant(merchant_1)).to eq(50)
+      expect(invoice1.total_revenue_for_merchant(merchant_1.id)).to eq(50)
       #^ this to show that it can calculate the total revenue for a specific merchant
       #there are two merchants on the invoice and no bulk discounts should be applied
       #should only return 50 instead of 105 because thats how much revenue merchant1 had
