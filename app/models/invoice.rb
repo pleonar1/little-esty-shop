@@ -4,6 +4,7 @@ class Invoice < ApplicationRecord
   has_many :invoice_items
   has_many :items, through: :invoice_items
 
+
   enum status: {"cancelled" => 0, "in progress" => 1, "completed" => 2}
 
   validates_presence_of :status
@@ -25,6 +26,10 @@ class Invoice < ApplicationRecord
   end
 
   def total_discount_for_merchant(merchant_id)
-
+    invoice_items.joins(:bulk_discounts)
+    .where("invoice_items.quantity >= bulk_discounts.quantity AND bulk_discounts.merchant_id = ?", merchant_id)
+    .select("invoice_items.id, MAX((invoice_items.unit_price * invoice_items.quantity * bulk_discounts.discount)) AS discounted_revenue")
+    .group("invoice_items.id")
+    .sum(&:discounted_revenue)
   end
 end
