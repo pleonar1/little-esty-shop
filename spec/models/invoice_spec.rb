@@ -125,5 +125,28 @@ RSpec.describe Invoice, type: :model do
 
       expect(invoice2.total_revenue_for_merchant(merchant_1.id)).to eq(100)
     end
+
+    it "calculates the total_discount_for_merchant" do
+      merchant_1 = Merchant.create!(name: "Staples")
+      merchant_2 = Merchant.create!(name: "Office Depot")
+
+      item1 = merchant_1.items.create!(name: "item1", description: "item1 description", unit_price: 10)
+      item3 = merchant_2.items.create!(name: "item3", description: "item3 description", unit_price: 30)
+
+      bd1 = merchant_1.bulk_discounts.create!(discount: 10, quantity: 9)
+      bd2 = merchant_1.bulk_discounts.create!(discount: 20, quantity: 10)
+
+      customer = Customer.create!(first_name: "Paul", last_name: "Wall")
+
+      invoice1 = customer.invoices.create!(status: "completed")
+      invoice2 = customer.invoices.create!(status: "completed")
+
+
+      invoice_item3 = InvoiceItem.create!(invoice_id: invoice2.id, item_id: item1.id, quantity: 10, unit_price: 10, status: "shipped")
+      invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 5, unit_price: 10, status: "shipped")
+
+      expect(invoice1.total_discount_for_merchant).to eq(0) #no discount applied
+      expect(invoice3.total_discount_for_merchant).to eq(20) #the better discount 20 percent is applied
+    end
   end
 end
