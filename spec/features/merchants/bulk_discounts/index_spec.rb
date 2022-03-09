@@ -74,7 +74,6 @@ RSpec.describe 'Merchant Bulk Discount Index' do
       bulk_d2 = merchant_1.bulk_discounts.create!(quantity: 10, discount: 10)
 
       visit "/merchants/#{merchant_1.id}/bulk_discounts"
-      save_and_open_page
       within "#holidays" do
         expect(page).to have_content("Good Friday")
         expect(page).to have_content("Memorial Day")
