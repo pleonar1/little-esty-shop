@@ -191,5 +191,25 @@ RSpec.describe Invoice, type: :model do
 
       expect(invoice1.total_discounted_revenue).to eq(5000)
     end
+
+    it "can return the updated price after discounts are applied" do
+      merchant_1 = Merchant.create!(name: "Staples")
+      merchant_2 = Merchant.create!(name: "Office Depot")
+
+      item1 = merchant_1.items.create!(name: "item1", description: "item1 description", unit_price: 10)
+      item2 = merchant_2.items.create!(name: "item2", description: "item2 description", unit_price: 10)
+
+      bd1 = merchant_1.bulk_discounts.create!(discount: 10, quantity: 10)
+      bd2 = merchant_2.bulk_discounts.create!(discount: 20, quantity: 20)
+
+      customer = Customer.create!(first_name: "Paul", last_name: "Wall")
+
+      invoice1 = customer.invoices.create!(status: "completed")
+
+      invoice_item3 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 10, unit_price: 10, status: "shipped")
+      invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item2.id, quantity: 20, unit_price: 10, status: "shipped")
+
+      expect(invoice1.final_price).to eq(250)
+    end
   end
 end
