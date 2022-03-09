@@ -67,5 +67,13 @@ RSpec.describe 'Merchant Bulk Discount Index' do
       expect(page).to_not have_content(bulk_d2.quantity)
       expect(page).to_not have_content(bulk_d2.discount)
     end
+
+    it "has the next three upcoming holidays listed" do
+      within "holidays" do
+        expect(page).to have_content("Good Friday")
+        expect(page).to have_content("Memorial Day")
+        expect(page).to have_content("Juneteenth")
+      end
+    end
   end
 end
