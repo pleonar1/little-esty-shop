@@ -67,5 +67,19 @@ RSpec.describe 'Merchant Bulk Discount Index' do
       expect(page).to_not have_content(bulk_d2.quantity)
       expect(page).to_not have_content(bulk_d2.discount)
     end
+
+    it "has the next three upcoming holidays listed" do
+      merchant_1 = Merchant.create!(name: "Staples")
+      bulk_d1 = merchant_1.bulk_discounts.create!(quantity: 5, discount: 11)
+      bulk_d2 = merchant_1.bulk_discounts.create!(quantity: 10, discount: 10)
+
+      visit "/merchants/#{merchant_1.id}/bulk_discounts"
+      save_and_open_page
+      within "#holidays" do
+        expect(page).to have_content("Good Friday")
+        expect(page).to have_content("Memorial Day")
+        expect(page).to have_content("Juneteenth")
+      end
+    end
   end
 end

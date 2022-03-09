@@ -12,3 +12,12 @@
     </div>
   <% end %>
 </div>
+
+<h3>Next Upcoming Holidays:</h3>
+<div id="holidays">
+  <ol>
+    <% @holidays.each do |holiday| %>
+      <li><p><%= holiday.name %></p></li>
+    <% end %>
+  </ol>
+</div>
