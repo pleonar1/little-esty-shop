@@ -44,4 +44,8 @@ class Invoice < ApplicationRecord
                  .group("invoice_items.id")
                  .sum(&:discounted_revenue)
   end
+
+  def final_price
+    ((total_invoice_revenue) - (total_discounted_revenue).to_f/100)
+  end
 end
