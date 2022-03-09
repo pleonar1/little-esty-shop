@@ -36,4 +36,16 @@ class Invoice < ApplicationRecord
   def revenue_after_discount(merchant_id)
     ((total_revenue_for_merchant(merchant_id) - (total_discount_for_merchant(merchant_id)).to_f/100))
   end
+
+  def total_discounted_revenue
+    invoice_items.joins(:bulk_discounts)
+                 .where("invoice_items.quantity >= bulk_discounts.quantity")
+                 .select("invoice_items.id, MAX((invoice_items.unit_price * invoice_items.quantity * bulk_discounts.discount)) AS discounted_revenue")
+                 .group("invoice_items.id")
+                 .sum(&:discounted_revenue)
+  end
+
+  def final_price
+    ((total_invoice_revenue) - (total_discounted_revenue).to_f/100)
+  end
 end

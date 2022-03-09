@@ -70,4 +70,29 @@ RSpec.describe 'the admin invoice show' do
     expect(page).to have_content("Invoice Status: cancelled")
     expect(page).to_not have_content("Invoice Status: in progress")
   end
+
+  describe "final project" do
+    it "has the total revenue before and after discounts are applied" do
+      merchant_1 = Merchant.create!(name: "Staples")
+      merchant_2 = Merchant.create!(name: "Office Depot")
+
+      item1 = merchant_1.items.create!(name: "item1", description: "item1 description", unit_price: 10)
+      item2 = merchant_2.items.create!(name: "item2", description: "item2 description", unit_price: 10)
+
+      bd1 = merchant_1.bulk_discounts.create!(discount: 10, quantity: 10)
+      bd2 = merchant_2.bulk_discounts.create!(discount: 20, quantity: 20)
+
+      customer = Customer.create!(first_name: "Paul", last_name: "Wall")
+
+      invoice1 = customer.invoices.create!(status: "completed")
+
+      invoice_item3 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 10, unit_price: 10, status: "shipped")
+      invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item2.id, quantity: 20, unit_price: 10, status: "shipped")
+
+      visit "/admin/invoices/#{invoice1.id}"
+
+      expect(page).to have_content("Total Invoice Revenue: $300")
+      expect(page).to have_content("Total Invoice Revenue After Discounts: $250")
+    end
+  end
 end
